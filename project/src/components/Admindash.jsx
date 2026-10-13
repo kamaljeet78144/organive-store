@@ -14,15 +14,15 @@ export const Admindash = () => {
 
     const [cartdata, setcartdata] = useState([])
     const [revenue, setrevenue] = useState(0)
-    const[user,setuser]=useState([])
+    const [user, setuser] = useState([])
 
 
     // product api get from allpro.jsx 
-    useEffect(() => { findd(); found(); rev();reg() }, [])
+    useEffect(() => { findd(); found(); rev(); reg() }, [])
 
     const findd = async () => {
         try {
-            const found = await axios.get("http://localhost:9000/api/getproduct")
+            const found = await axios.get("https://organive-store.onrender.com/api/getproduct")
             if (found.data.statuscode == 1) {
                 setproduct(found.data.foundproduct)
             }
@@ -39,11 +39,11 @@ export const Admindash = () => {
 
 
     const found = async () => {
-        const result = await fetch("http://localhost:9000/api/getcategory", { method: "get" })
+        const result = await fetch("https://organive-store.onrender.com/api/getcategory", { method: "get" })
         if (result.ok) {
             const res = await result.json()
             if (res.statuscode === 1) {
-                
+
                 setcategory(res.category)
             }
             else {
@@ -54,13 +54,13 @@ export const Admindash = () => {
 
     // get api take from checkout api and applied in admin dassh total revenue section,total order section 
 
-  
+
 
 
 
 
     const rev = async () => {
-        const revdata = await fetch("http://localhost:9000/api/allorders", { method: "get" })
+        const revdata = await fetch("https://organive-store.onrender.com/api/allorders", { method: "get" })
         if (revdata) {
             const data = await revdata.json()
             if (data.statuscode == 1) {
@@ -70,10 +70,10 @@ export const Admindash = () => {
                 const tot = data.allorders.reduce((sum, item) => {
                     return sum + parseFloat(item.Totalprice)
                 }, 0)
-               
+
                 const rev = tot.toFixed(2)
-                 setrevenue(rev)
-               
+                setrevenue(rev)
+
 
             }
             else {
@@ -86,17 +86,17 @@ export const Admindash = () => {
 
     // get api from register get api and applied in section registered users 
 
-const reg =async()=>{
-    const regdata=await fetch("http://localhost:9000/api/user",{method:"get"})
-    if(regdata){
-        const data=await regdata.json()
-        if(data.statuscode==1){
-            setuser(data.registeruser)
+    const reg = async () => {
+        const regdata = await fetch("https://organive-store.onrender.com/api/user", { method: "get" })
+        if (regdata) {
+            const data = await regdata.json()
+            if (data.statuscode == 1) {
+                setuser(data.registeruser)
 
+            }
+            else { alert("an error occured") }
         }
-        else{alert("an error occured")}
     }
-}
 
 
 
@@ -187,7 +187,7 @@ const reg =async()=>{
     const stats = [
         {
             title: "Total Revenue",
-            value: `$`+revenue,
+            value: `$` + revenue,
             subtitle: "+18% from last month",
             icon: "fa-money",
             color: "#80b435",

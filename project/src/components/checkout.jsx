@@ -3,111 +3,111 @@ import React from "react"
 import { useContext } from "react"
 import { useEffect } from "react"
 import { useState } from "react"
-import { Link,  useLocation,  useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { Logincontext } from "./logincontext"
 
 export const Checkout = () => {
 
-	const[name,setname]=useState("")
-	const[email,setemail]=useState("")
-	const[phone,setphone]=useState("")
-	const[address,setaddress]=useState("")
-	const[payment,setpayment]=useState("Cash on Delivery")
+	const [name, setname] = useState("")
+	const [email, setemail] = useState("")
+	const [phone, setphone] = useState("")
+	const [address, setaddress] = useState("")
+	const [payment, setpayment] = useState("Cash on Delivery")
 
-const [odrid,setordrid]=useState()
-	const [checkout,setcheckout]=useState([])
-	const [grandtotal,setgrandtotal]=useState()
+	const [odrid, setordrid] = useState()
+	const [checkout, setcheckout] = useState([])
+	const [grandtotal, setgrandtotal] = useState()
 
-	const[dly,setdly]=useState()
+	const [dly, setdly] = useState()
 
 	// total price print through location property 
 
-	const location=useLocation()
-	const finaltotal=location.state
+	const location = useLocation()
+	const finaltotal = location.state
 
-// delivery charges through useffect  and applied in final total
-//  now make again function to apply on delivery input 
+	// delivery charges through useffect  and applied in final total
+	//  now make again function to apply on delivery input 
 
-useEffect(()=>{
-	if(finaltotal<=100){
-		setgrandtotal( parseFloat(finaltotal)+  parseFloat(10.00))
-		setdly(10)
-	}
-	else if(finaltotal<=150){
-		setgrandtotal(parseFloat(finaltotal)+  parseFloat(7.00))
-		setdly(7)
-	}
-	else if(finaltotal<=200){
-		setgrandtotal(parseFloat(finaltotal)+  parseFloat(5.00))
-		setdly(5)
-	}
-	else{
-		setgrandtotal(parseFloat(finaltotal))
-		setdly("0")
-	}
+	useEffect(() => {
+		if (finaltotal <= 100) {
+			setgrandtotal(parseFloat(finaltotal) + parseFloat(10.00))
+			setdly(10)
+		}
+		else if (finaltotal <= 150) {
+			setgrandtotal(parseFloat(finaltotal) + parseFloat(7.00))
+			setdly(7)
+		}
+		else if (finaltotal <= 200) {
+			setgrandtotal(parseFloat(finaltotal) + parseFloat(5.00))
+			setdly(5)
+		}
+		else {
+			setgrandtotal(parseFloat(finaltotal))
+			setdly("0")
+		}
 
-})
-
-
+	})
 
 
 
 
 
-const Navigate=useNavigate()
 
 
-useEffect(()=>{
-	const userdata=JSON.parse(localStorage.getItem("user"))
-	if(userdata){
-		const id=userdata.useridd
-		find(id)
-		const orderid="OID"+Math.floor(1000+Math.random()*1000)
-		setordrid(orderid)
-	}
+	const Navigate = useNavigate()
 
-		else{
+
+	useEffect(() => {
+		const userdata = JSON.parse(localStorage.getItem("user"))
+		if (userdata) {
+			const id = userdata.useridd
+			find(id)
+			const orderid = "OID" + Math.floor(1000 + Math.random() * 1000)
+			setordrid(orderid)
+		}
+
+		else {
 			Navigate("/login")
 		}
 
-},[])
+	}, [])
 
-// post api 
+	// post api 
 
-const[usertype,setusertype,loggedin,setloggedin,userid,setuserid]=useContext(Logincontext)
-
-
-const pos=async()=>{
-
-const items=checkout.map(a=>({ 
-	productid:a.productid,
-	productname:a.name,
-	qnty:a.quantity
-}))
+	const [usertype, setusertype, loggedin, setloggedin, userid, setuserid] = useContext(Logincontext)
 
 
+	const pos = async () => {
 
-	try{
-		const check=await axios.post("http://localhost:9000/api/checkout",{name,email, phone,address,payment,userid,odrid,grandtotal,productdata:items})
-		
-			if(check.data.statuscode==1){
+		const items = checkout.map(a => ({
+			productid: a.productid,
+			productname: a.name,
+			qnty: a.quantity
+		}))
+
+
+
+		try {
+			const check = await axios.post("https://organive-store.onrender.com/api/checkout", { name, email, phone, address, payment, userid, odrid, grandtotal, productdata: items })
+
+			if (check.data.statuscode == 1) {
 				alert("Congratulations,order has been placed")
 
 
 				Navigate("/ordersuccess", {
-					state:{name,email,phone,address,payment,odrid}
+					state: { name, email, phone, address, payment, odrid }
 				})
 			}
-			else{
+			else {
 				alert(check.data.msg)
 			}
 
-		
+
+
+		}
+		catch (err) { alert(err) }
 
 	}
-	catch(err){alert(err)}
-
-}
 
 
 
@@ -116,19 +116,19 @@ const items=checkout.map(a=>({
 
 
 
-const find=async(id)=>{
-	try{
-		const found=await axios.get(`http://localhost:9000/api/addtocart/${id}`)
-		if(found.data.statuscode==1){
-		
-			setcheckout(found.data.alldataa)
+	const find = async (id) => {
+		try {
+			const found = await axios.get(`https://organive-store.onrender.com/api/addtocart/${id}`)
+			if (found.data.statuscode == 1) {
+
+				setcheckout(found.data.alldataa)
+			}
+			else {
+				alert(found.data.msg)
+			}
 		}
-		else{
-			alert(found.data.msg)
-		}
+		catch (err) { alert(err) }
 	}
-	catch(err){alert(err)}
-}
 
 
 
@@ -183,7 +183,7 @@ const find=async(id)=>{
 											name="name"
 											placeholder="Enter your full name"
 											className="txt-s-115 cl3 plh1 size-a-25 bo-all-1 bocl15 focus1 p-rl-20 w-full"
-											style={{ borderRadius: "6px" }} onChange={(e)=>setname(e.target.value)}
+											style={{ borderRadius: "6px" }} onChange={(e) => setname(e.target.value)}
 										/>
 									</div>
 
@@ -197,7 +197,7 @@ const find=async(id)=>{
 											name="email"
 											placeholder="Enter your email"
 											className="txt-s-115 cl3 plh1 size-a-25 bo-all-1 bocl15 focus1 p-rl-20 w-full"
-											style={{ borderRadius: "6px" }} onChange={(e)=>setemail(e.target.value)}
+											style={{ borderRadius: "6px" }} onChange={(e) => setemail(e.target.value)}
 										/>
 									</div>
 
@@ -211,7 +211,7 @@ const find=async(id)=>{
 											name="phone"
 											placeholder="Enter your phone number"
 											className="txt-s-115 cl3 plh1 size-a-25 bo-all-1 bocl15 focus1 p-rl-20 w-full"
-											style={{ borderRadius: "6px" }} onChange={(e)=>setphone(e.target.value)}
+											style={{ borderRadius: "6px" }} onChange={(e) => setphone(e.target.value)}
 										/>
 									</div>
 
@@ -225,7 +225,7 @@ const find=async(id)=>{
 											rows="4"
 											placeholder="Street address, house/apartment number, city, and pincode..."
 											className="txt-s-115 cl3 plh1 bo-all-1 bocl15 focus1 p-rl-20 p-tb-12 w-full"
-											style={{ borderRadius: "6px", resize: "vertical" }} onChange={(e)=>setaddress(e.target.value)}
+											style={{ borderRadius: "6px", resize: "vertical" }} onChange={(e) => setaddress(e.target.value)}
 										></textarea>
 									</div>
 
@@ -262,7 +262,7 @@ const find=async(id)=>{
 														cursor: "pointer",
 														marginRight: "12px"
 													}}
-													onChange={(e)=>setpayment(e.target.value)}
+													onChange={(e) => setpayment(e.target.value)}
 												/>
 												<label
 													htmlFor="cod"
@@ -318,10 +318,10 @@ const find=async(id)=>{
 							{/* Products To Checkout List */}
 							<div className="p-tb-15 bo-b-1 bocl15">
 								<h5 className="txt-m-103 cl6 p-b-15" style={{ fontSize: "14px", textTransform: "uppercase" }}>
-									Products to Checkout 
+									Products to Checkout
 								</h5>
 
-								 {checkout.map((product) => 
+								{checkout.map((product) =>
 									<div
 										key={product._id}
 										className="flex-w flex-sb-m p-b-15"
@@ -331,9 +331,9 @@ const find=async(id)=>{
 											justifyContent: "space-between",
 											marginBottom: "12px"
 										}}
-									> 
+									>
 										{/* Product Thumbnail & Details */}
-									 <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+										<div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
 											<div
 												style={{
 													width: "55px",
@@ -362,12 +362,12 @@ const find=async(id)=>{
 										</div>
 
 										{/* Item Total */}
-										 <span style={{ fontSize: "15px", fontWeight: "600", color: "#333" }}>
+										<span style={{ fontSize: "15px", fontWeight: "600", color: "#333" }}>
 											${product.price * product.quantity}
 										</span>
 									</div>
 								)}
-									
+
 							</div>
 
 							{/* Totals Breakdown */}
@@ -382,7 +382,7 @@ const find=async(id)=>{
 								<div className="flex-w flex-sb-m" style={{ display: "flex", justifyContent: "space-between" }}>
 									<span className="txt-m-103 cl6">Delivery Fee:</span>
 									<span style={{ color: "#81b03f", fontWeight: "600", fontSize: "14px" }}>
-									${dly}
+										${dly}
 									</span>
 								</div>
 							</div>

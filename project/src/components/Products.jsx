@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { useSearchParams,Link } from "react-router-dom"
+import { useSearchParams, Link } from "react-router-dom"
 
 
 export const Product = () => {
@@ -18,9 +18,9 @@ export const Product = () => {
 
 	const findd = async () => {
 		try {
-			const found = await axios.get(`http://localhost:9000/api/productfind/${id}`)
+			const found = await axios.get(`https://organive-store.onrender.com/api/productfind/${id}`)
 			if (found.data.statuscode == 1) {
-			
+
 				setproduct(found.data.products)
 			}
 			else {
@@ -67,31 +67,31 @@ export const Product = () => {
 							{/*  Block1  */}
 
 							<Link to={`/detail?id=${data._id}`}>
-							<div className="block1">
-								<div className="block1-bg wrap-pic-w bo-all-1 bocl12 hov3 trans-04" style={{ borderRadius: "8px", overflow: "hidden" }}>
-									<img
-										src={`/uploads/${data.image}`}
-										alt={data.name}
-										style={{ width: "100%", height: "260px", objectFit: "cover", display: "block" }}
-									/>
+								<div className="block1">
+									<div className="block1-bg wrap-pic-w bo-all-1 bocl12 hov3 trans-04" style={{ borderRadius: "8px", overflow: "hidden" }}>
+										<img
+											src={`/uploads/${data.image}`}
+											alt={data.name}
+											style={{ width: "100%", height: "260px", objectFit: "cover", display: "block" }}
+										/>
+									</div>
+
+									<div className="flex-col-c-m p-t-18">
+										<a href="#" className="txt-m-103 cl3 txt-center hov-cl10 trans-04 js-name-b1" style={{ textTransform: "capitalize" }}>
+											{data.name}
+										</a>
+
+										<span className="txt-m-104 cl9 p-t-8">
+											{data.price?.includes("$") ? data.price : `${data.price}$`}
+										</span>
+
+										{data.detail && (
+											<p className="txt-s-101 cl6 txt-center p-t-8 p-rl-15">
+												{data.detail}
+											</p>
+										)}
+									</div>
 								</div>
-
-								<div className="flex-col-c-m p-t-18">
-									<a href="#" className="txt-m-103 cl3 txt-center hov-cl10 trans-04 js-name-b1" style={{ textTransform: "capitalize" }}>
-										{data.name}
-									</a>
-
-									<span className="txt-m-104 cl9 p-t-8">
-										{data.price?.includes("$") ? data.price : `${data.price}$`}
-									</span>
-
-									{data.detail && (
-										<p className="txt-s-101 cl6 txt-center p-t-8 p-rl-15">
-											{data.detail}
-										</p>
-									)}
-								</div>
-							</div>
 							</Link>
 						</div>
 					)}

@@ -2,19 +2,19 @@ import { useEffect } from "react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 export const Allblogs = () => {
-	const[alldata,setalldata]=useState([])
+	const [alldata, setalldata] = useState([])
 
 
 	//  get api of blog  from blog.jsx
-	useEffect(()=>{getb()},[])
+	useEffect(() => { getb() }, [])
 
 	const getb = async () => {
-		const result = await fetch("http://localhost:9000/api/getblogs", { method: "get" })
+		const result = await fetch("https://organive-store.onrender.com/api/getblogs", { method: "get" })
 		if (result.ok) {
 			const res = await result.json()
 			if (res.statuscode === 1) {
-			setalldata(res.getblogs)
-			
+				setalldata(res.getblogs)
+
 			}
 			else {
 				alert("an error occured")
@@ -66,42 +66,42 @@ export const Allblogs = () => {
 
 						{/* Single Blog Card */}
 
-						{alldata.map((a,index)=>
-						<div className="col-sm-6 col-md-4 p-b-40" key={index}>
-							<div
-								className="blog-card bo-all-1 bocl12 hov3 trans-04"
-								style={{ borderRadius: "8px", overflow: "hidden", background: "#fff", boxShadow: "0 2px 10px rgba(0,0,0,0.05)" }}
-							>
-								{/* Blog Image */}
-								<div className="wrap-pic-w hov4" style={{ height: "240px", overflow: "hidden" }}>
-									<img
-										src={`/uploads/${a.image}`}
-										alt="Blog"
-										style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-									/>
-								</div>
-
-								<div className="p-t-20 p-b-25 p-rl-20">
-									{/* Blog Time */}
-									<div className="m-b-8">
-										<span className="txt-s-107 cl3" style={{ fontSize: "14px", color: "#888" }}>
-									{a.time}
-										</span>
+						{alldata.map((a, index) =>
+							<div className="col-sm-6 col-md-4 p-b-40" key={index}>
+								<div
+									className="blog-card bo-all-1 bocl12 hov3 trans-04"
+									style={{ borderRadius: "8px", overflow: "hidden", background: "#fff", boxShadow: "0 2px 10px rgba(0,0,0,0.05)" }}
+								>
+									{/* Blog Image */}
+									<div className="wrap-pic-w hov4" style={{ height: "240px", overflow: "hidden" }}>
+										<img
+											src={`/uploads/${a.image}`}
+											alt="Blog"
+											style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+										/>
 									</div>
 
-									{/* Blog Title */}
-									<h4 className="p-t-5 p-b-10">
-										<Link to={`/blogdetails?id=${a._id}`}
-											
-											className="txt-m-109 cl3 hov-cl10 trans-04"
-											style={{ fontSize: "18px", fontWeight: "600", lineHeight: "1.4", display: "block" }}
-										>
-											{a.blogtitle}
-										</Link>
-									</h4>
+									<div className="p-t-20 p-b-25 p-rl-20">
+										{/* Blog Time */}
+										<div className="m-b-8">
+											<span className="txt-s-107 cl3" style={{ fontSize: "14px", color: "#888" }}>
+												{a.time}
+											</span>
+										</div>
+
+										{/* Blog Title */}
+										<h4 className="p-t-5 p-b-10">
+											<Link to={`/blogdetails?id=${a._id}`}
+
+												className="txt-m-109 cl3 hov-cl10 trans-04"
+												style={{ fontSize: "18px", fontWeight: "600", lineHeight: "1.4", display: "block" }}
+											>
+												{a.blogtitle}
+											</Link>
+										</h4>
+									</div>
 								</div>
 							</div>
-						</div>
 						)}
 					</div>
 				</div>

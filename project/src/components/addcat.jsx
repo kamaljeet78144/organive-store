@@ -4,7 +4,7 @@ export const AddCat = () => {
 	const [name, setname] = useState("")
 	const [image, setimage] = useState("")
 	const [allcat, setallcat] = useState([])
-	const[upid,setupid]=useState("")
+	const [upid, setupid] = useState("")
 	const [oldimage, setoldimage] = useState("")
 
 
@@ -13,7 +13,7 @@ export const AddCat = () => {
 
 	useEffect(() => { found() }, [])
 
-	
+
 
 	// post api 
 
@@ -24,7 +24,7 @@ export const AddCat = () => {
 		formdata.append("catname", name)
 		formdata.append("image", image)
 
-		const result = await fetch("http://localhost:9000/api/addcategory", {
+		const result = await fetch("https://organive-store.onrender.com/api/addcategory", {
 			method: "post",
 			body: formdata
 		})
@@ -43,7 +43,7 @@ export const AddCat = () => {
 	//  get category
 
 	const found = async () => {
-		const result = await fetch("http://localhost:9000/api/getcategory", { method: "get" })
+		const result = await fetch("https://organive-store.onrender.com/api/getcategory", { method: "get" })
 		if (result.ok) {
 			const res = await result.json()
 			if (res.statuscode === 1) {
@@ -59,51 +59,54 @@ export const AddCat = () => {
 
 	// delete category
 
-	const del =async(id)=>{
-		const confirm=window.confirm(" Do you want to delete?")
-		if(confirm==true){const remove=await fetch(`http://localhost:9000/api/deletedata/${id}`,{method:"delete"})
-		if(remove.ok){
-			const deletedata=await remove.json()
-			if(deletedata.statuscode===1){
-				alert(deletedata.msg)
-				found()
+	const del = async (id) => {
+		const confirm = window.confirm(" Do you want to delete?")
+		if (confirm == true) {
+			const remove = await fetch(`https://organive-store.onrender.com/api/deletedata/${id}`, { method: "delete" })
+			if (remove.ok) {
+				const deletedata = await remove.json()
+				if (deletedata.statuscode === 1) {
+					alert(deletedata.msg)
+					found()
+				}
+				else { alert(deletedata.msg) }
 			}
-			else{alert(deletedata.msg)}
-		}}
-		else{
+		}
+		else {
 			found()
 		}
-		
+
 	}
 
 
 	// update
 
 
-	const updatedata=(value)=>{
+	const updatedata = (value) => {
 		setname(value.catname)
 		setoldimage(value.catimg)
 		setupid(value._id)
 		alert(value.catname)
-		
+
 	}
 
 
-	const onupdate=async()=>{
-		const formdata	= new FormData()
-		formdata.append("name",name)
-		formdata.append("image",image)
-		formdata.append("oldpic",oldimage)
-		const data=await fetch(`http://localhost:9000/api/updatedata/${upid}`,{method:"put",
-			body:formdata,
-		
+	const onupdate = async () => {
+		const formdata = new FormData()
+		formdata.append("name", name)
+		formdata.append("image", image)
+		formdata.append("oldpic", oldimage)
+		const data = await fetch(`https://organive-store.onrender.com/api/updatedata/${upid}`, {
+			method: "put",
+			body: formdata,
+
 		})
-		if(data.ok){
-			const up =await data.json()
-			if(up.statuscode===1){
+		if (data.ok) {
+			const up = await data.json()
+			if (up.statuscode === 1) {
 				alert("category updated")
 			}
-			else{
+			else {
 				alert("an error occured")
 			}
 		}
@@ -230,20 +233,20 @@ export const AddCat = () => {
 													21$
 												</span>
 
-												
+
 											</div>
 										</div>
 									</div>
 									<div className="flex-c-m p-t-15" style={{ gap: "10px" }}>
-										<button style={{ backgroundColor: "#dd6b77ff", color: "#fff", padding: "8px 20px", border: "none", borderRadius: "4px", cursor: "pointer", fontWeight: "600" }} onClick={()=>del(data._id)}>
+										<button style={{ backgroundColor: "#dd6b77ff", color: "#fff", padding: "8px 20px", border: "none", borderRadius: "4px", cursor: "pointer", fontWeight: "600" }} onClick={() => del(data._id)}>
 											Delete
 										</button>
-										<button style={{ backgroundColor: "#79e592ff", color: "#fff", padding: "8px 20px", border: "none", borderRadius: "4px", cursor: "pointer", fontWeight: "600" }} onClick={()=>updatedata(data)}>
+										<button style={{ backgroundColor: "#79e592ff", color: "#fff", padding: "8px 20px", border: "none", borderRadius: "4px", cursor: "pointer", fontWeight: "600" }} onClick={() => updatedata(data)}>
 											Update
 										</button>
 									</div>
 								</div>
- 
+
 							)
 						}
 

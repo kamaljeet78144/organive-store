@@ -12,15 +12,15 @@ export const Detail = () => {
 	const [detail, setdetail] = useState("")
 
 
-	
+
 	const [quantity, setquantity] = useState(1)
 
 
-	const[usertype,setusertype,loggedin,setloggedin,userid,setuserid]=useContext(Logincontext)
+	const [usertype, setusertype, loggedin, setloggedin, userid, setuserid] = useContext(Logincontext)
 
 	const [params] = useSearchParams()
 
-	const Navigate=useNavigate()
+	const Navigate = useNavigate()
 
 	const id = params.get("id")
 
@@ -30,9 +30,9 @@ export const Detail = () => {
 
 	const findd = async () => {
 		try {
-			const found = await axios.get(`http://localhost:9000/api/detail/${id}`)
+			const found = await axios.get(`https://organive-store.onrender.com/api/detail/${id}`)
 			if (found.data.statuscode === 1) {
-				
+
 				setdetail(found.data.product.detail)
 				setname(found.data.product.name)
 				const pricee = parseInt((found.data.product.price))
@@ -54,22 +54,22 @@ export const Detail = () => {
 
 
 		try {
-			const data = { name, price: price, image: image, productid:id, userid:userid, quantity }
-			const add = await axios.post("http://localhost:9000/api/addtocart", data)
-			
-				if (add.data.statuscode === 1) {
-					alert(" product added to cart")
-					Navigate("/addtocart")
-				}
-				else if(add.data.statuscode==3){
-					alert(" product already in cart")
-					Navigate("/addtocart")
-				}
-				else {
-					alert(add.data.msg)
-				}
+			const data = { name, price: price, image: image, productid: id, userid: userid, quantity }
+			const add = await axios.post("https://organive-store.onrender.com/api/addtocart", data)
+
+			if (add.data.statuscode === 1) {
+				alert(" product added to cart")
+				Navigate("/addtocart")
 			}
-		
+			else if (add.data.statuscode == 3) {
+				alert(" product already in cart")
+				Navigate("/addtocart")
+			}
+			else {
+				alert(add.data.msg)
+			}
+		}
+
 		catch (err) {
 			alert(err)
 		}
@@ -77,22 +77,22 @@ export const Detail = () => {
 
 
 	// whislist post api 
-	const whis=async()=>{
-		try{
-			const alldata={price:price,name, image:image,userid:userid,productid:id,}
-			const whispos=await axios.post("http://localhost:9000/api/whislist", alldata)
-			if(whispos.data.statuscode==1){
-				
-				Navigate("/whislist")
-			} else if(whispos.data.statuscode===2){
-                alert("already in wishlist")
-            }
+	const whis = async () => {
+		try {
+			const alldata = { price: price, name, image: image, userid: userid, productid: id, }
+			const whispos = await axios.post("https://organive-store.onrender.com/api/whislist", alldata)
+			if (whispos.data.statuscode == 1) {
 
-			else{
+				Navigate("/whislist")
+			} else if (whispos.data.statuscode === 2) {
+				alert("already in wishlist")
+			}
+
+			else {
 				alert(whispos.data.msg)
 			}
 		}
-		catch(err){
+		catch (err) {
 			alert(err)
 		}
 	}

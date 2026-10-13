@@ -2,39 +2,40 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 export const Blog = () => {
-const[title,settitle]=useState("")
-const[detail,setdetail]=useState("")
-const[image,setimage]=useState("")
+	const [title, settitle] = useState("")
+	const [detail, setdetail] = useState("")
+	const [image, setimage] = useState("")
 
 
 
 
-// post api of blog 
+	// post api of blog 
 
-const blogg=async(e)=>{
-	e.preventDefault()
-	const formdata=new FormData()
-	formdata.append("title",title)
-	formdata.append("detail",detail)
-	formdata.append("image",image)
+	const blogg = async (e) => {
+		e.preventDefault()
+		const formdata = new FormData()
+		formdata.append("title", title)
+		formdata.append("detail", detail)
+		formdata.append("image", image)
 
 
 
-	const newblog=await fetch("http://localhost:9000/api/blog",{method:"post",
-		body:formdata,
-	})
-	if(newblog.ok){
-		const result=await newblog.json()
-		if(result.statuscode==1){
-			
+		const newblog = await fetch("https://organive-store.onrender.com/api/blog", {
+			method: "post",
+			body: formdata,
+		})
+		if (newblog.ok) {
+			const result = await newblog.json()
+			if (result.statuscode == 1) {
+
+
+			}
+			else {
+				alert("an error occured")
+			}
 
 		}
-		else{
-			alert("an error occured")
-		}
-
 	}
-}
 
 
 
@@ -97,8 +98,8 @@ const blogg=async(e)=>{
 												className="txt-s-115 cl3 plh1 size-a-25 bo-all-1 bocl15 focus1 p-rl-20"
 												type="text"
 												name="title"
-												placeholder="Enter Blog Title *" 
-												onChange={(e)=>settitle(e.target.value)}
+												placeholder="Enter Blog Title *"
+												onChange={(e) => settitle(e.target.value)}
 											/>
 										</div>
 									</div>
@@ -114,7 +115,7 @@ const blogg=async(e)=>{
 												type="file"
 												name="image"
 												accept="image/*"
-															onChange={(e)=>setimage(e.target.files[0])}
+												onChange={(e) => setimage(e.target.files[0])}
 											/>
 										</div>
 									</div>
@@ -131,7 +132,7 @@ const blogg=async(e)=>{
 												placeholder="Enter detailed blog description / content *"
 
 												rows="6"
-															onChange={(e)=>setdetail(e.target.value)}
+												onChange={(e) => setdetail(e.target.value)}
 											></textarea>
 										</div>
 									</div>

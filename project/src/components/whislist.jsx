@@ -4,7 +4,7 @@ import { useSearchParams, Link, useNavigate } from "react-router-dom"
 
 export const Whislist = () => {
     const [allpro, setallpro] = useState([])
-    const[uid,setuid]=useState()
+    const [uid, setuid] = useState()
 
 
     //    post api of whislist applied in detail page from where data come 
@@ -29,11 +29,11 @@ export const Whislist = () => {
 
     const findd = async (id) => {
         try {
-            const found = await axios.get(`http://localhost:9000/api/getwhislist/${id}`)
+            const found = await axios.get(`https://organive-store.onrender.com/api/getwhislist/${id}`)
             if (found.data.statuscode == 1) {
                 setallpro(found.data.getproduct)
             }
-           
+
 
             else { alert("not found") }
 
@@ -46,7 +46,7 @@ export const Whislist = () => {
     // delete api of whislist 
 
     const del = async (id) => {
-        const remove = await fetch(`http://localhost:9000/api/deletewhislist/${id}`, { method: "delete" })
+        const remove = await fetch(`https://organive-store.onrender.com/api/deletewhislist/${id}`, { method: "delete" })
         if (remove.ok) {
             const deldata = await remove.json()
             if (deldata.statuscode == 1) {
@@ -115,14 +115,14 @@ export const Whislist = () => {
                                                     {data.detail}
                                                 </p>
                                             )}
-                                            
-                                           
+
+
                                         </div>
                                     </div>
-                                    </Link>
-                                 <button type="button" className="flex-c-m txt-s-103 cl0 bg10 size-a-2 hov-btn2 trans-04 p-rl-30" onClick={()=>del(data._id)}>
-									Delete
-								</button>
+                                </Link>
+                                <button type="button" className="flex-c-m txt-s-103 cl0 bg10 size-a-2 hov-btn2 trans-04 p-rl-30" onClick={() => del(data._id)}>
+                                    Delete
+                                </button>
                             </div>
                         )}
                     </div>

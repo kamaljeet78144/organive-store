@@ -1,53 +1,53 @@
 import { useContext, useState } from "react"
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { Logincontext } from "./logincontext"
 
 export const Login = () => {
-const [email,setemail]=useState("")
-const[password,setpassword]=useState("")
+    const [email, setemail] = useState("")
+    const [password, setpassword] = useState("")
 
 
 
-const[ usertype,setusertype,loggedin,setloggedin,userid,setuserid]=useContext(Logincontext)
+    const [usertype, setusertype, loggedin, setloggedin, userid, setuserid] = useContext(Logincontext)
 
-const navigate=useNavigate()
+    const navigate = useNavigate()
 
 
-const login=async(e)=>{
-    e.preventDefault()
-    const logindata=await fetch("http://localhost:9000/api/login",{
-        method:"post",
-        body:JSON.stringify({email,password}),
-        headers:{"content-type":"application/json;"}
-       })
-       if(logindata.ok){
-        const log=await logindata.json()
-        if(log.statuscode===1){
-            alert(log.msg)
-            navigate("/")
-            const useridd=log.id
-            const userrole=log.role
-            setusertype(userrole)
-            setloggedin(true)
-            setuserid(useridd)
-            localStorage.setItem("user",JSON.stringify({userrole,useridd}))
+    const login = async (e) => {
+        e.preventDefault()
+        const logindata = await fetch("https://organive-store.onrender.com/api/login", {
+            method: "post",
+            body: JSON.stringify({ email, password }),
+            headers: { "content-type": "application/json;" }
+        })
+        if (logindata.ok) {
+            const log = await logindata.json()
+            if (log.statuscode === 1) {
+                alert(log.msg)
+                navigate("/")
+                const useridd = log.id
+                const userrole = log.role
+                setusertype(userrole)
+                setloggedin(true)
+                setuserid(useridd)
+                localStorage.setItem("user", JSON.stringify({ userrole, useridd }))
+            }
+            else if (log.statuscode == 3) {
+                alert(log.msg)
+                navigate("/admin")
+                setusertype("Admin")
+                setloggedin(true)
+            }
+            else if (log.statuscode == 2) {
+                alert(log.msg)
+                setloggedin(false)
+            }
+            else {
+                alert(log.msg)
+                setloggedin(false)
+            }
         }
-        else if(log.statuscode==3){
-            alert(log.msg)
-            navigate("/admin")
-            setusertype("Admin")
-            setloggedin(true)
-        }
-        else if(log.statuscode==2){
-            alert(log.msg)
-            setloggedin(false)
-        }
-        else{
-            alert(log.msg)
-            setloggedin(false)
-        }
-       }
-}
+    }
 
 
     return (
@@ -94,13 +94,13 @@ const login=async(e)=>{
                         <div className="row justify-content-center">
                             <div className="col-sm-6 p-b-30">
                                 <div className="validate-input">
-                                    <input className="txt-s-101 cl3 plh1 size-a-46 bo-all-1 bocl15 focus1 p-rl-20" type="email" name="email" placeholder="Your Email ID * " onChange={(e)=>setemail(e.target.value)} />
+                                    <input className="txt-s-101 cl3 plh1 size-a-46 bo-all-1 bocl15 focus1 p-rl-20" type="email" name="email" placeholder="Your Email ID * " onChange={(e) => setemail(e.target.value)} />
                                 </div>
                             </div>
 
                             <div className="col-sm-6 p-b-30">
                                 <div className="validate-input">
-                                    <input className="txt-s-101 cl3 plh1 size-a-46 bo-all-1 bocl15 focus1 p-rl-20" type="password" name="password" placeholder="Your Password *" onChange={(e)=>setpassword(e.target.value)} />
+                                    <input className="txt-s-101 cl3 plh1 size-a-46 bo-all-1 bocl15 focus1 p-rl-20" type="password" name="password" placeholder="Your Password *" onChange={(e) => setpassword(e.target.value)} />
                                 </div>
                             </div>
                         </div>

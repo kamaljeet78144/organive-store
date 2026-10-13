@@ -4,36 +4,36 @@ import { Link, useLocation } from "react-router-dom"
 
 export const OrderSuccess = () => {
 
-	const location=useLocation()
-	const{name,email,phone,address,payment,odrid}=location.state
-	
-useEffect(()=>{
-const userdata=JSON.parse(localStorage.getItem("user"))
-if(userdata){
-	const id=userdata.useridd
-	del(id)
+	const location = useLocation()
+	const { name, email, phone, address, payment, odrid } = location.state
 
-}
+	useEffect(() => {
+		const userdata = JSON.parse(localStorage.getItem("user"))
+		if (userdata) {
+			const id = userdata.useridd
+			del(id)
+
+		}
 
 
-},[])
+	}, [])
 
-	
-const del=async(id)=>{
-	const remove=await fetch(`http://localhost:9000/api/emptycart/${id}`,{method:"delete"})
-	if(remove.ok){
-		const removedata=await remove.json()
-if(removedata.statuscode==1){
-console.log("empty cart")
-}
-	else{
-		console.log("cart is not empty ")
+
+	const del = async (id) => {
+		const remove = await fetch(`https://organive-store.onrender.com/api/emptycart/${id}`, { method: "delete" })
+		if (remove.ok) {
+			const removedata = await remove.json()
+			if (removedata.statuscode == 1) {
+				console.log("empty cart")
+			}
+			else {
+				console.log("cart is not empty ")
+			}
+
+		}
+
+
 	}
-
-	}
-
-
-}
 
 
 

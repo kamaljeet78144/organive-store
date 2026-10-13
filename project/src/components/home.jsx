@@ -20,7 +20,7 @@ export const Home = () => {
 
 	const getcat = async () => {
 		try {
-			const found = await axios.get("http://localhost:9000/api/getcategory")
+			const found = await axios.get("https://organive-store.onrender.com/api/getcategory")
 			setcategory(found.data.category)
 		}
 		catch (err) {
@@ -36,7 +36,7 @@ export const Home = () => {
 	}, [])
 
 	const frt = async () => {
-		const frtdata = await fetch("http://localhost:9000/api/fruits", { method: "get" })
+		const frtdata = await fetch("https://organive-store.onrender.com/api/fruits", { method: "get" })
 		if (frtdata) {
 			const data = await frtdata.json()
 			if (data.statuscode == 1) {
@@ -54,7 +54,7 @@ export const Home = () => {
 
 
 	const veg = async () => {
-		const vegdata = await fetch("http://localhost:9000/api/vegetables", { method: "get" })
+		const vegdata = await fetch("https://organive-store.onrender.com/api/vegetables", { method: "get" })
 		if (vegdata) {
 			const data = await vegdata.json()
 			if (data.statuscode == 1) {
@@ -748,7 +748,7 @@ export const Home = () => {
 										{fruits.map((a, index) =>
 											<Link to={`/detail?id=${a._id}`} className="flex-w flex-str size-h-1 bo-all-1 bocl12 hov3 trans-04 m-b-30" key={index}>
 												<div className="size-w-6 flex-c-m wrap-pic-max-s">
-													<img src={`/uploads/${a.image}`} alt="IMG-PRODUCT" style={{height:"150px",width:"150px"}} />
+													<img src={`/uploads/${a.image}`} alt="IMG-PRODUCT" style={{ height: "150px", width: "150px" }} />
 												</div>
 
 												<div className="size-w-7 flex-col-m p-l-30 p-tb-15 p-r-15 p-l-0-ssm">
@@ -802,7 +802,7 @@ export const Home = () => {
 											{vegs.map((a, index) =>
 												<Link to={`/detail?id=${a._id}`} className="flex-w flex-str size-h-1 bo-all-1 bocl12 hov3 trans-04 m-b-30" key={index}>
 													<div className="size-w-6 flex-c-m wrap-pic-max-s">
-														<img src={`/uploads/${a.image}`} alt="IMG-PRODUCT"  style={{height:"150px",width:"150px"}}/>
+														<img src={`/uploads/${a.image}`} alt="IMG-PRODUCT" style={{ height: "150px", width: "150px" }} />
 													</div>
 
 													<div className="size-w-7 flex-col-m p-l-30 p-tb-15 p-r-15 p-l-0-ssm">

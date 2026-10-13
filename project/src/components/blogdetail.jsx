@@ -15,7 +15,7 @@ export const BlogDetail = () => {
 
 	const findd = async () => {
 		try {
-			const found = await axios.get(`http://localhost:9000/api/blogdetail/${id}`);
+			const found = await axios.get(`https://organive-store.onrender.com/api/blogdetail/${id}`);
 			if (found.data.statuscode === 1) {
 				setdetail(found.data.blogdetails);
 			} else {

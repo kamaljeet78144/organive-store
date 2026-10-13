@@ -7,7 +7,7 @@ export const Addproduct = () => {
 	const [price, setprice] = useState("")
 	const [detail, setdetail] = useState("")
 	const [image, setimage] = useState("")
-	const[catname,setcatname]=useState()
+	const [catname, setcatname] = useState()
 	const [allcat, setallcat] = useState([])
 	const [allproduct, setallproduct] = useState([])
 
@@ -23,9 +23,9 @@ export const Addproduct = () => {
 		formdata.append("price", price)
 		formdata.append("detail", detail)
 		formdata.append("image", image)
-		formdata.append("catname",catname)
+		formdata.append("catname", catname)
 
-		const result = await fetch("http://localhost:9000/api/addproduct", {
+		const result = await fetch("https://organive-store.onrender.com/api/addproduct", {
 			method: "post",
 			body: formdata
 		})
@@ -33,10 +33,10 @@ export const Addproduct = () => {
 		if (result.ok) {
 			const res = await result.json()
 			if (res.statuscode === 1) {
-			
+
 				found()
 			} else {
-			
+
 			}
 		}
 	}
@@ -46,8 +46,8 @@ export const Addproduct = () => {
 	const getcat = async () => {
 
 		try {
-			const category = await axios.get("http://localhost:9000/api/getcategory")
-		
+			const category = await axios.get("https://organive-store.onrender.com/api/getcategory")
+
 			setallcat(category.data.category)
 
 
@@ -60,7 +60,7 @@ export const Addproduct = () => {
 
 
 	const found = async () => {
-		const result = await fetch("http://localhost:9000/api/getproduct", { method: "Get" })
+		const result = await fetch("https://organive-store.onrender.com/api/getproduct", { method: "Get" })
 		if (result.ok) {
 			const res = await result.json()
 			if (res.statuscode === 1) {
@@ -70,16 +70,16 @@ export const Addproduct = () => {
 	}
 
 
-	const del =async(id)=>{
-		const remove=await fetch(`http://localhost:9000/api/deleteproduct/${id}`,{method:"delete"})
-		if(remove.ok){
-			const data=await remove.json()
-			if(data.statuscode===1){
-				
+	const del = async (id) => {
+		const remove = await fetch(`https://organive-store.onrender.com/api/deleteproduct/${id}`, { method: "delete" })
+		if (remove.ok) {
+			const data = await remove.json()
+			if (data.statuscode === 1) {
+
 				alert(data)
 				found()
 			}
-			else{
+			else {
 				alert(data)
 			}
 		}
@@ -249,7 +249,7 @@ export const Addproduct = () => {
 										</div>
 									</div>
 									<div className="flex-c-m p-t-15" style={{ gap: "10px" }}>
-										<button style={{ backgroundColor: "#dc3545", color: "#fff", padding: "8px 20px", border: "none", borderRadius: "4px", cursor: "pointer", fontWeight: "600" }} onClick={()=>del(data._id)}>
+										<button style={{ backgroundColor: "#dc3545", color: "#fff", padding: "8px 20px", border: "none", borderRadius: "4px", cursor: "pointer", fontWeight: "600" }} onClick={() => del(data._id)}>
 											Delete
 										</button>
 										<button style={{ backgroundColor: "#28a745", color: "#fff", padding: "8px 20px", border: "none", borderRadius: "4px", cursor: "pointer", fontWeight: "600" }}>

@@ -4,50 +4,50 @@ import { Link } from "react-router-dom";
 export const Users = () => {
 
 
-  const[user,setuserdata]=useState([])
-  
-  
-  
+  const [user, setuserdata] = useState([])
+
+
+
   // get api of user made by using register.jsx data
-  
-  useEffect(()=>{reg()},[])
-  
-  
-  
-  const reg=async()=>{
-    const data =await fetch("http://localhost:9000/api/user" ,{method:"get"})
-  
-    if(data.ok){
-      const regdata=await data.json()
-      if(regdata.statuscode==1){
-  setuserdata( regdata.registeruser)
+
+  useEffect(() => { reg() }, [])
+
+
+
+  const reg = async () => {
+    const data = await fetch("https://organive-store.onrender.com/api/user", { method: "get" })
+
+    if (data.ok) {
+      const regdata = await data.json()
+      if (regdata.statuscode == 1) {
+        setuserdata(regdata.registeruser)
       }
-      else{
+      else {
         alert("an error occurred ")
       }
     }
   }
 
   // delete api 
-  
-  const del=async(id)=>{
-    const confirm=window.confirm("Do YOu want to delete user?")
-    if(confirm==true){
-    const remove=await fetch(`http://localhost:9000/api/deleteuser/${id}`,{method:"delete"})
-    if(remove.ok){
-      const deluser=await remove.json()
-        if(deluser.statuscode==1){
+
+  const del = async (id) => {
+    const confirm = window.confirm("Do YOu want to delete user?")
+    if (confirm == true) {
+      const remove = await fetch(`https://organive-store.onrender.com/api/deleteuser/${id}`, { method: "delete" })
+      if (remove.ok) {
+        const deluser = await remove.json()
+        if (deluser.statuscode == 1) {
           reg()
-  
+
         }
-        else{
+        else {
           alert("user is not deleted")
         }
-      }}
-      else
-        {reg()}
+      }
     }
-  
+    else { reg() }
+  }
+
 
   return (
     <>
@@ -90,66 +90,66 @@ export const Users = () => {
         {/* Cards Grid (Pure static JSX, no map, no useState, no API) */}
         <div className="row">
           {/* User Card 1 */}
-{user.map((a,index)=>
+          {user.map((a, index) =>
 
-          <div className="col-md-6 col-lg-4 col-12" style={{ marginBottom: "24px" }} key={index}>
-            <div
-              style={{
-                backgroundColor: "#ffffff",
-                border: "1px solid #e2e8f0",
-                borderRadius: "12px",
-                padding: "24px",
-                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)"
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center", marginBottom: "14px" }}>
-                <div
-                  style={{
-                    width: "48px",
-                    height: "48px",
-                    borderRadius: "50%",
-                    backgroundColor: "#80b43520",
-                    color: "#80b435",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "20px",
-                    marginRight: "12px"
-                  }}
-                >
-                  <i className="fa fa-user"></i>
+            <div className="col-md-6 col-lg-4 col-12" style={{ marginBottom: "24px" }} key={index}>
+              <div
+                style={{
+                  backgroundColor: "#ffffff",
+                  border: "1px solid #e2e8f0",
+                  borderRadius: "12px",
+                  padding: "24px",
+                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)"
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", marginBottom: "14px" }}>
+                  <div
+                    style={{
+                      width: "48px",
+                      height: "48px",
+                      borderRadius: "50%",
+                      backgroundColor: "#80b43520",
+                      color: "#80b435",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "20px",
+                      marginRight: "12px"
+                    }}
+                  >
+                    <i className="fa fa-user"></i>
+                  </div>
+                  <div>
+                    <h4 style={{ fontSize: "18px", fontWeight: "700", color: "#2d3748", margin: 0 }}>
+                      {a.name}
+                    </h4>
+                    <span style={{ fontSize: "12px", color: "#80b435", fontWeight: "600" }}>
+                      Registered User
+                    </span>
+                  </div>
                 </div>
-                <div>
-                  <h4 style={{ fontSize: "18px", fontWeight: "700", color: "#2d3748", margin: 0 }}>
-                  {a.name}
-                  </h4>
-                  <span style={{ fontSize: "12px", color: "#80b435", fontWeight: "600" }}>
-                    Registered User
-                  </span>
-                </div>
-              </div>
 
-              <p style={{ fontSize: "14px", color: "#4a5568", margin: "8px 0" }}>
-                <i className="fa fa-envelope" style={{ color: "#3182ce", marginRight: "10px", width: "16px" }}></i>
-                <strong>Email: </strong> {a.email}
-              </p>
-
-              <p style={{ fontSize: "14px", color: "#4a5568", margin: "8px 0" }}>
-                <i className="fa fa-phone" style={{ color: "#38a169", marginRight: "10px", width: "16px" }}></i>
-                <strong>Phone: </strong> {a.phone}
-              </p>
                 <p style={{ fontSize: "14px", color: "#4a5568", margin: "8px 0" }}>
-                   <i className="fa fa-user" style={{ color: "#38a169", marginRight: "10px", width: "16px" }}></i>
-                <strong>Role: </strong> {a.Role}
-              </p>
-              <button style={{ backgroundColor: "#dd6b77ff", color: "#fff", padding: "8px 20px", border: "none", borderRadius: "4px", cursor: "pointer", fontWeight: "600" }} onClick={()=>del(a._id)}>
-											Delete
-										</button>
-            </div>
-          </div>
+                  <i className="fa fa-envelope" style={{ color: "#3182ce", marginRight: "10px", width: "16px" }}></i>
+                  <strong>Email: </strong> {a.email}
+                </p>
 
-)}
-    
+                <p style={{ fontSize: "14px", color: "#4a5568", margin: "8px 0" }}>
+                  <i className="fa fa-phone" style={{ color: "#38a169", marginRight: "10px", width: "16px" }}></i>
+                  <strong>Phone: </strong> {a.phone}
+                </p>
+                <p style={{ fontSize: "14px", color: "#4a5568", margin: "8px 0" }}>
+                  <i className="fa fa-user" style={{ color: "#38a169", marginRight: "10px", width: "16px" }}></i>
+                  <strong>Role: </strong> {a.Role}
+                </p>
+                <button style={{ backgroundColor: "#dd6b77ff", color: "#fff", padding: "8px 20px", border: "none", borderRadius: "4px", cursor: "pointer", fontWeight: "600" }} onClick={() => del(a._id)}>
+                  Delete
+                </button>
+              </div>
+            </div>
+
+          )}
+
         </div>
       </section>
     </>

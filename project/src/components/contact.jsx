@@ -1,31 +1,32 @@
 import { useState } from "react"
 
 export const Contact = () => {
-    const [name,setname]=useState("")
-     const [email,setemail]=useState("")
-      const [phone,setphone]=useState("")
-       const [message,setmessage]=useState("")
+	const [name, setname] = useState("")
+	const [email, setemail] = useState("")
+	const [phone, setphone] = useState("")
+	const [message, setmessage] = useState("")
 
 
-//contact 
+	//contact 
 
-const contact =async()=>{
-    const response=await fetch("http://localhost:9000/api/contact",{method:"post",
-        body:JSON.stringify({name,email,phone,message}),
-        headers:{"content-type":"application/json;"}
+	const contact = async () => {
+		const response = await fetch("https://organive-store.onrender.com/api/contact", {
+			method: "post",
+			body: JSON.stringify({ name, email, phone, message }),
+			headers: { "content-type": "application/json;" }
 
-    })
-   if(response.ok){
-     const res=await response.json()
-     if(res.statuscode===1){
-        alert(res.msg)
-     }
-     else{
-        alert(res.msg)
-     }
-   }
-    
-}
+		})
+		if (response.ok) {
+			const res = await response.json()
+			if (res.statuscode === 1) {
+				alert(res.msg)
+			}
+			else {
+				alert(res.msg)
+			}
+		}
+
+	}
 
 
 
@@ -82,26 +83,26 @@ const contact =async()=>{
 								<div className="row">
 									<div className="col-lg-6 p-b-20">
 										<div className="m-r--5 m-rl-0-lg">
-											<input className="txt-s-115 cl3 plh1 size-a-25 bo-all-1 bocl15 focus1 p-rl-20" type="text" name="name" placeholder="Your Full Name *" onChange={(e)=>setname(e.target.value)}/>
+											<input className="txt-s-115 cl3 plh1 size-a-25 bo-all-1 bocl15 focus1 p-rl-20" type="text" name="name" placeholder="Your Full Name *" onChange={(e) => setname(e.target.value)} />
 										</div>
 									</div>
 
 									<div className="col-lg-6 p-b-20">
 										<div className="m-l--5 m-rl-0-lg">
-											<input className="txt-s-115 cl3 plh1 size-a-25 bo-all-1 bocl15 focus1 p-rl-20" type="email" name="email" placeholder="Your Email *" onChange={(e)=>setemail(e.target.value)}/>
+											<input className="txt-s-115 cl3 plh1 size-a-25 bo-all-1 bocl15 focus1 p-rl-20" type="email" name="email" placeholder="Your Email *" onChange={(e) => setemail(e.target.value)} />
 										</div>
 									</div>
 
 									<div className="col-12 p-b-20">
 										<div>
-											<input className="txt-s-115 cl3 plh1 size-a-25 bo-all-1 bocl15 focus1 p-rl-20" type="text" name="phone" placeholder="Your Phone Number *" onChange={(e)=>setphone(e.target.value)}/>
+											<input className="txt-s-115 cl3 plh1 size-a-25 bo-all-1 bocl15 focus1 p-rl-20" type="text" name="phone" placeholder="Your Phone Number *" onChange={(e) => setphone(e.target.value)} />
 										</div>
 									</div>
 
 									<div className="col-12 p-b-20">
 										<div>
-											<textarea className="txt-s-115 cl3 plh1 size-a-48 bo-all-1 bocl15 focus1 p-rl-20 p-tb-10" name="message" placeholder="How can we help you? (Your Message)"onChange={(e)=>setmessage(e.target.value)}></textarea>
-										</div>	
+											<textarea className="txt-s-115 cl3 plh1 size-a-48 bo-all-1 bocl15 focus1 p-rl-20 p-tb-10" name="message" placeholder="How can we help you? (Your Message)" onChange={(e) => setmessage(e.target.value)}></textarea>
+										</div>
 									</div>
 								</div>
 
@@ -109,11 +110,11 @@ const contact =async()=>{
 									<button type="button" className="flex-c-m txt-s-103 cl0 bg10 size-a-2 hov-btn2 trans-04" onClick={contact}>
 										Send Message
 									</button>
-                                    
+
 								</div>
 							</form>
 						</div>
-					</div>	
+					</div>
 				</div>
 			</section>
 
@@ -122,7 +123,7 @@ const contact =async()=>{
 				<div className="map how-pos2 s-full respon19">
 					<div className="contact-map h-full" id="google_map" data-map-x="19.420967" data-map-y="-99.162822" data-scrollwhell="0" data-draggable="1" data-zoom="15"></div>
 				</div>
-			
+
 				<div className="container pointer-e-none">
 					<div className="m-rl--15 flex-r">
 						<div className="pointer-e-auto size-a-49 bg10 p-rl-40 p-t-50 p-b-30 w-full-lg p-rl-15-ssm">
@@ -151,7 +152,7 @@ const contact =async()=>{
 									</div>
 
 									<span className="size-w-74 txt-s-101 cl0">
-										(426) 460 8668 
+										(426) 460 8668
 										<br />
 										(317) 799 7654
 									</span>

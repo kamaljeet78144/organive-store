@@ -13,7 +13,7 @@ export const Register = () => {
 
     const post = async (e) => {
         e.preventDefault()
-        const result = await fetch("http://localhost:9000/api/post", {
+        const result = await fetch("https://organive-store.onrender.com/api/post", {
             method: "post",
             body: JSON.stringify({ name, email, phone, password }),
 
