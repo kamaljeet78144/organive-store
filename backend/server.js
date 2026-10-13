@@ -13,7 +13,10 @@ const mongoPath = "mongodb://kamaljeetkaur78144_db_user:Ty5jjV7Dskv9naPa@ac-ogru
 app.set("etag", false)
 app.use(express.json())
 
-const corsOptions={origin:["project-nine-alpha-32.vercel.app","http://localhost:5173"], Credentials:true}
+const corsOptions = {
+    origin: ["https://project-nine-alpha-32.vercel.app", "http://localhost:5173"],
+    credentials: true
+}
 app.use(cors(corsOptions))
 app.use((req, res, next) => {
     res.set("Cache-Control", "no-store, no-cache, must-revalidate, private")
