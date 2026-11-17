@@ -49,7 +49,7 @@ const logout=()=>{
 						<div class="menu-desktop">
 							<ul class="main-menu">
 								<li class="active-menu">
-									<a href="index.html">Home</a>
+								<Link  to={"/admin"}>Home</Link>
 									
 								</li>
 
@@ -66,39 +66,26 @@ const logout=()=>{
 									</ul>
 								
 								</li>
-
 								<li>
 									<Link  to={"/addcat"}>Manage Category</Link>
-									<ul class="sub-menu">
-										<li><a href="shop-sidebar-grid.html">Shop Sidebar Grid</a></li>
-										<li><a href="shop-sidebar-list.html">Shop Sidebar List</a></li>
-										<li><a href="shop-product-grid.html">Shop Product Grid</a></li>
-										<li><a href="shop-product-list.html">Shop Product List</a></li>
-										<li><a href="product-single.html">Product Single</a></li>
-										<li><a href="shop-cart.html">Shop Cart</a></li>
-									</ul>
+ 
+
+
 								</li>
 
-								<li>
-									<a href="blog-list.html">Manage Products</a>
-									<ul class="sub-menu">
-										<li><a href="blog-list.html">Blog List</a></li>
-										<li><a href="blog-grid-01.html">Blog Grid 1</a></li>
-										<li><a href="blog-grid-02.html">Blog Grid 2</a></li>
-										<li><a href="blog-single.html">Blog Single</a></li>
-									</ul>
-								</li>
+							
+									
+									
 
 								<li>
-									<a href="gallery-01.html">Gallery</a>
-									<ul class="sub-menu">
-										<li><a href="gallery-01.html">Gallery 1</a></li>
-										<li><a href="gallery-02.html">Gallery 2</a></li>
-									</ul>
+									<Link to={"/addproduct"}>Manage Products</Link>
+								
 								</li>
 
+							
+
 								<li>
-									<Link to={"/contact"}>Contact</Link>
+									<Link to={"/complaint"}>Customer Complaints</Link>
 								</li>
 
 								<li>
@@ -404,10 +391,7 @@ const logout=()=>{
 
 				<li>
 					<a href="gallery-01.html">Gallery</a>
-					<ul class="sub-menu-m">
-						<li><a href="gallery-01.html">Gallery 1</a></li>
-						<li><a href="gallery-02.html">Gallery 2</a></li>
-					</ul>
+				
 
 					<span class="arrow-main-menu-m">
 						<i class="fa fa-angle-right" aria-hidden="true"></i>

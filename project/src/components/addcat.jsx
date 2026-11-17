@@ -86,7 +86,7 @@ export const AddCat = () => {
 		setname(value.catname)
 		setoldimage(value.catimg)
 		setupid(value._id)
-		alert(value.catname)
+		
 
 	}
 

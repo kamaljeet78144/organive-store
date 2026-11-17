@@ -7,9 +7,12 @@ export const Addproduct = () => {
 	const [price, setprice] = useState("")
 	const [detail, setdetail] = useState("")
 	const [image, setimage] = useState("")
-	const [catname, setcatname] = useState()
+	const [catname, setcatname] = useState("")
 	const [allcat, setallcat] = useState([])
 	const [allproduct, setallproduct] = useState([])
+	const [oldimage, setoldimage] = useState("")
+	const [upid, setupid] = useState("")
+
 
 
 	useEffect(() => { found(), getcat() }, [])
@@ -18,6 +21,10 @@ export const Addproduct = () => {
 
 	const addproduct = async (e) => {
 		if (e) e.preventDefault()
+		if (!catname) {
+			alert("Please select a category")
+			return
+		}
 		const formdata = new FormData()
 		formdata.append("name", name)
 		formdata.append("price", price)
@@ -33,10 +40,15 @@ export const Addproduct = () => {
 		if (result.ok) {
 			const res = await result.json()
 			if (res.statuscode === 1) {
-
+				alert("product stored")
 				found()
+				setname("")
+				setprice("")
+				setdetail("")
+				setimage("")
+				setcatname("")
 			} else {
-
+				alert("an error occured")
 			}
 		}
 	}
@@ -76,14 +88,61 @@ export const Addproduct = () => {
 			const data = await remove.json()
 			if (data.statuscode === 1) {
 
-				alert(data)
+				alert("product deleted")
 				found()
 			}
 			else {
-				alert(data)
+				alert("an error occured")
 			}
 		}
 	}
+
+// update api of add product  like category update api 
+
+const onupdate =(value)=>{
+	setname(value.name)
+	setprice(value.price)
+	setoldimage(value.image)
+	setdetail(value.detail)
+	setcatname(value.categoryname)
+	setupid(value._id)
+	window.scrollTo({ top: 400, behavior: "smooth" })
+}
+
+const product=async()=>{
+	if (!upid) {
+		alert("Please click Update on a product below first")
+		return
+	}
+	const formdata=new FormData()
+	formdata.append("name",name)
+	formdata.append("price",price)
+	formdata.append("oldpic",oldimage)
+	formdata.append("detail",detail)
+	formdata.append("image",image)
+	formdata.append("catname",catname)
+	const data=await fetch(`https://organive-store.onrender.com/api/updateproduct/${upid}`,{
+		method:"put",body:formdata
+	})
+	if(data.ok){
+		const up=await data.json()
+		if(up.statuscode==1){
+			alert("product updated")
+			found()
+			setname("")
+			setprice("")
+			setdetail("")
+			setimage("")
+			setcatname("")
+			setupid("")
+			setoldimage("")
+		}
+		else{
+			alert("an error occured")
+		}
+	}
+}
+
 
 
 
@@ -144,11 +203,11 @@ export const Addproduct = () => {
 											Category Name:
 										</div>
 										<div className="m-r--5 m-rl-0-lg">
-											<select className="txt-s-115 cl3 plh1 size-a-25 bo-all-1 bocl15 focus1 p-rl-20" type="text" name="name" placeholder="Product Name *" onChange={(e) => setcatname(e.target.value)}>
+											<select className="txt-s-115 cl3 plh1 size-a-25 bo-all-1 bocl15 focus1 p-rl-20" name="catname" value={catname} onChange={(e) => setcatname(e.target.value)}>
+												<option value="">Select Category</option>
 												{
-													allcat.map((cat, index) =>
-														<option value={cat._id}>{cat.
-															catname}</option>
+													allcat && allcat.map((cat, index) =>
+														<option key={cat._id || index} value={cat._id}>{cat.catname}</option>
 													)
 												}
 											</select>
@@ -159,7 +218,7 @@ export const Addproduct = () => {
 											Product Name:
 										</div>
 										<div className="m-r--5 m-rl-0-lg">
-											<input className="txt-s-115 cl3 plh1 size-a-25 bo-all-1 bocl15 focus1 p-rl-20" type="text" name="name" placeholder="Product Name *" onChange={(e) => setname(e.target.value)} />
+											<input className="txt-s-115 cl3 plh1 size-a-25 bo-all-1 bocl15 focus1 p-rl-20" type="text" name="name" placeholder="Product Name *" value={name} onChange={(e) => setname(e.target.value)} />
 										</div>
 									</div>
 
@@ -169,7 +228,7 @@ export const Addproduct = () => {
 											Product Price:
 										</div>
 										<div className="m-l--5 m-rl-0-lg">
-											<input className="txt-s-115 cl3 plh1 size-a-25 bo-all-1 bocl15 focus1 p-rl-20" type="text" name="price" placeholder="Product Price *" onChange={(e) => setprice(e.target.value)} />
+											<input className="txt-s-115 cl3 plh1 size-a-25 bo-all-1 bocl15 focus1 p-rl-20" type="text" name="price" placeholder="Product Price *" value={price} onChange={(e) => setprice(e.target.value)} />
 										</div>
 									</div>
 
@@ -189,7 +248,7 @@ export const Addproduct = () => {
 											Product Detail:
 										</div>
 										<div>
-											<textarea className="txt-s-115 cl3 plh1 size-a-48 bo-all-1 bocl15 focus1 p-rl-20 p-tb-10" name="detail" placeholder="Product Detail *" onChange={(e) => setdetail(e.target.value)}></textarea>
+											<textarea className="txt-s-115 cl3 plh1 size-a-48 bo-all-1 bocl15 focus1 p-rl-20 p-tb-10" name="detail" placeholder="Product Detail *" value={detail} onChange={(e) => setdetail(e.target.value)}></textarea>
 										</div>
 									</div>
 								</div>
@@ -197,6 +256,9 @@ export const Addproduct = () => {
 								<div className="flex-l p-t-10">
 									<button type="button" className="flex-c-m txt-s-103 cl0 bg10 size-a-2 hov-btn2 trans-04" onClick={addproduct}>
 										Add Product
+									</button>
+									<button type="button" className="flex-c-m txt-s-103 cl0 bg10 size-a-2 hov-btn2 trans-04 m-l-10" onClick={product}>
+										Update
 									</button>
 								</div>
 							</form>
@@ -252,7 +314,7 @@ export const Addproduct = () => {
 										<button style={{ backgroundColor: "#dc3545", color: "#fff", padding: "8px 20px", border: "none", borderRadius: "4px", cursor: "pointer", fontWeight: "600" }} onClick={() => del(data._id)}>
 											Delete
 										</button>
-										<button style={{ backgroundColor: "#28a745", color: "#fff", padding: "8px 20px", border: "none", borderRadius: "4px", cursor: "pointer", fontWeight: "600" }}>
+										<button style={{ backgroundColor: "#28a745", color: "#fff", padding: "8px 20px", border: "none", borderRadius: "4px", cursor: "pointer", fontWeight: "600" }} onClick={()=>onupdate(data)}>
 											Update
 										</button>
 									</div>

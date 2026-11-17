@@ -4,7 +4,8 @@ const cors = require("cors")
 const app = express()
 const bcrypt = require("bcrypt")
 const multer = require("multer")
-const fs=require("fs")
+const fs = require("fs")
+const path = require("path")
 
 const mongoPath = "mongodb://kamaljeetkaur78144_db_user:Ty5jjV7Dskv9naPa@ac-ogrurtz-shard-00-00.w46tf9k.mongodb.net:27017,ac-ogrurtz-shard-00-01.w46tf9k.mongodb.net:27017,ac-ogrurtz-shard-00-02.w46tf9k.mongodb.net:27017/?ssl=true&replicaSet=atlas-uwy0od-shard-0&authSource=admin&appName=projectCluster/VegetableStore"
 
@@ -18,6 +19,7 @@ const corsOptions = {
     credentials: true
 }
 app.use(cors(corsOptions))
+app.use("/uploads", express.static(path.join(__dirname, "../project/public/uploads")))
 app.use((req, res, next) => {
     res.set("Cache-Control", "no-store, no-cache, must-revalidate, private")
     next()
@@ -192,7 +194,11 @@ let image;
 
 const mystorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "../project/public/uploads")
+        const uploadDir = path.join(__dirname, "../project/public/uploads")
+        if (!fs.existsSync(uploadDir)) {
+            fs.mkdirSync(uploadDir, { recursive: true })
+        }
+        cb(null, uploadDir)
     },
     filename: (req, file, cb) => {
         image = Date.now() + "-" + file.originalname
@@ -214,7 +220,7 @@ const catmodel = mongoose.model("Category", category, "Category")
 app.post("/api/addcategory", upload.single("image"), async (req, res) => {
     const result = await catmodel({
         catname: req.body.catname,
-        catimg: image
+        catimg: req.file ? req.file.filename : image
     })
     const response = await result.save()
     if (response) {
@@ -260,29 +266,29 @@ app.delete("/api/deletedata/:id", async (req, res) => {
 // update api of category
 
 app.put("/api/updatedata/:id",upload.single("image"), async (req, res) => { 
+    let catimg;
     if(!req.file){
         catimg=req.body.oldpic
     }
     else{
-        fs.unlink("./public/uploads"+req.body.oldpic,(err)=>{
-            if(err){
-                console.log("file is not deleted")
-            }
-            else{
-                console.log("file is deleted ")
-            }
-        })
+        const oldFile = path.join(__dirname, "../project/public/uploads", req.body.oldpic || "")
+        if (req.body.oldpic && fs.existsSync(oldFile)) {
+            fs.unlink(oldFile, (err) => {
+                if (err) {
+                    console.log("file is not deleted")
+                }
+                else {
+                    console.log("file is deleted ")
+                }
+            })
+        }
+        catimg = req.file.filename
     }
-
-
-
-
-
 
     const up = await catmodel.findByIdAndUpdate({_id:req.params.id }, {
         $set: {
             catname: req.body.name,
-            catimg:image
+            catimg: catimg
 
         }
     })
@@ -315,7 +321,7 @@ app.post("/api/addproduct", upload.single("image"), async (req, res) => {
             name: req.body.name,
             price: req.body.price,
             detail: req.body.detail,
-            image: image
+            image: req.file ? req.file.filename : image
         })
 
         const response = await result.save()
@@ -354,7 +360,44 @@ app.delete("/api/deleteproduct/:id", async (req, res) => {
 })
 
 
+// add product update api like category api of update 
 
+app.put("/api/updateproduct/:id",upload.single("image"),async(req,res)=>{
+    if(!req.file){
+        image=req.body.oldpic;
+    }
+    else{
+        const oldFile = path.join(__dirname, "../project/public/uploads", req.body.oldpic || "")
+        if (req.body.oldpic && fs.existsSync(oldFile)) {
+            fs.unlink(oldFile, (err) => {
+                if (err) {
+                    console.log("file is not deleted")
+                }
+                else {
+                    console.log("file is deleted")
+                }
+            })
+        }
+        image = req.file.filename;
+    }
+    const up=await productModel.findByIdAndUpdate({_id:req.params.id},
+        {$set:{
+            categoryname: req.body.catname,
+            name:req.body.name,
+            price:req.body.price,
+            image:image,
+            detail:req.body.detail
+        }})
+        if(up){
+            res.send({statuscode:1})
+        }
+        else{
+            res.send({
+                statuscode:0
+            })
+        }
+
+})
 
 
 //find products by category 
@@ -711,7 +754,7 @@ app.post("/api/blog", upload.single("image"),async(req,res)=>{
 const blogg=await blogmodel({
     blogtitle:req.body.title,
     detail:req.body.detail,
-    image:image,
+    image: req.file ? req.file.filename : image,
     time:new Date().toLocaleString()
 })
 const result=await blogg.save()
