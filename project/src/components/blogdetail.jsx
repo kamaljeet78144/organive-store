@@ -103,8 +103,9 @@ export const BlogDetail = () => {
 							}}
 						>
 							<img
-								src={detail.image ? `/uploads/${detail.image}` : "/images/blog-11.jpg"}
+								src={detail.image ? (detail.image.startsWith("http") ? detail.image : `https://organive-store.onrender.com/uploads/${detail.image}`) : "/images/blog-11.jpg"}
 								alt={detail.blogtitle || "Blog Featured Image"}
+								onError={(e) => { e.target.onerror = null; e.target.src = detail.image ? (detail.image.startsWith("http") ? detail.image : `/uploads/${detail.image}`) : "/images/blog-11.jpg" }}
 								style={{
 									width: "100%",
 									height: "480px",

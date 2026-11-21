@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export const Blog = () => {
 	const [title, settitle] = useState("")
 	const [detail, setdetail] = useState("")
 	const [image, setimage] = useState("")
+	const [blogs,setblogs]=useState([])
 
 
 
@@ -37,6 +39,22 @@ export const Blog = () => {
 		}
 	}
 
+	// get api for recent blogs took from allblogs 
+	useEffect(()=>{getd()},[])
+
+	const getd=async()=>{
+		const res=await fetch("https://organive-store.onrender.com/api/getblogs",{method:"get"})
+		if(res.ok){
+			const data=await res.json()
+			if(data.statuscode==1){
+				setblogs(data.getblogs)
+			}
+			else{
+
+				alert("an error occurred")
+			}
+		}
+	}
 
 
 	return (
@@ -89,29 +107,49 @@ export const Blog = () => {
 							<form id="add-blog-form" className="validate-form">
 								<div className="row">
 									{/* Title of Blog */}
-									<div className="col-lg-12 p-b-20">
-										<div className="m-b-8 txt-s-101 cl3" >
+									<div className="col-lg-6 col-md-6 col-12 p-b-20">
+										<div className="m-b-8 txt-s-101 cl3" style={{ fontWeight: "600" }}>
 											Title of Blog:
 										</div>
 										<div>
 											<input
-												className="txt-s-115 cl3 plh1 size-a-25 bo-all-1 bocl15 focus1 p-rl-20"
+												className="txt-s-115 cl3 plh1 focus1"
+												style={{
+													width: "100%",
+													height: "48px",
+													padding: "0 18px",
+													border: "1px solid #d9d9d9",
+													borderRadius: "6px",
+													outline: "none"
+												}}
 												type="text"
 												name="title"
 												placeholder="Enter Blog Title *"
+												value={title}
 												onChange={(e) => settitle(e.target.value)}
 											/>
 										</div>
 									</div>
 
 									{/* Blog Image */}
-									<div className="col-lg-6 p-b-20">
-										<div className="m-b-8 txt-s-101 cl3">
+									<div className="col-lg-6 col-md-6 col-12 p-b-20">
+										<div className="m-b-8 txt-s-101 cl3" style={{ fontWeight: "600" }}>
 											Blog Image:
 										</div>
-										<div className="m-l--5 m-rl-0-lg">
+										<div>
 											<input
-												className="txt-s-115 cl3 plh1 size-a-25 bo-all-1 bocl15 focus1 p-rl-20"
+												className="txt-s-115 cl3 plh1 focus1"
+												style={{
+													width: "100%",
+													height: "48px",
+													padding: "10px 18px",
+													border: "1px solid #d9d9d9",
+													borderRadius: "6px",
+													outline: "none",
+													backgroundColor: "#fff",
+													display: "flex",
+													alignItems: "center"
+												}}
 												type="file"
 												name="image"
 												accept="image/*"
@@ -122,15 +160,24 @@ export const Blog = () => {
 
 									{/* Detail of Blog */}
 									<div className="col-12 p-b-20">
-										<div className="m-b-8 txt-s-101 cl3">
+										<div className="m-b-8 txt-s-101 cl3" style={{ fontWeight: "600" }}>
 											Detail of Blog:
 										</div>
 										<div>
 											<textarea
-												className="txt-s-115 cl3 plh1 size-a-48 bo-all-1 bocl15 focus1 p-rl-20 p-tb-10"
+												className="txt-s-115 cl3 plh1 focus1"
+												style={{
+													width: "100%",
+													minHeight: "130px",
+													padding: "14px 18px",
+													border: "1px solid #d9d9d9",
+													borderRadius: "6px",
+													outline: "none",
+													resize: "vertical"
+												}}
 												name="detail"
 												placeholder="Enter detailed blog description / content *"
-
+												value={detail}
 												rows="6"
 												onChange={(e) => setdetail(e.target.value)}
 											></textarea>
@@ -141,7 +188,17 @@ export const Blog = () => {
 								<div className="flex-l p-t-10">
 									<button
 										type="button"
-										className="flex-c-m txt-s-103 cl0 bg10 size-a-2 hov-btn2 trans-04" onClick={blogg}
+										className="flex-c-m txt-s-103 cl0 bg10 trans-04"
+										style={{
+											height: "48px",
+											padding: "0 35px",
+											borderRadius: "6px",
+											cursor: "pointer",
+											fontWeight: "600",
+											border: "none",
+											transition: "all 0.3s ease"
+										}}
+										onClick={blogg}
 									>
 										Add Blog
 									</button>
@@ -168,101 +225,113 @@ export const Blog = () => {
 						</h3>
 					</div>
 
-					<div className="row">
-						<div className="col-sm-6 col-md-4 p-b-30">
-							<div>
-								<div className="wrap-pic-w hov4">
-									<img src="/images/blog-11.jpg" alt="BLOG" />
-								</div>
+					<div className="row" style={{ display: "flex", flexWrap: "wrap" }}>
+						{blogs && blogs.map((a, index) =>
+							<div className="col-sm-6 col-md-4 p-b-40 d-flex" key={a._id || index}>
+								<div
+									className="blog-card trans-04"
+									style={{
+										width: "100%",
+										display: "flex",
+										flexDirection: "column",
+										backgroundColor: "#fff",
+										borderRadius: "10px",
+										border: "1px solid #e6e6e6",
+										overflow: "hidden",
+										boxShadow: "0 3px 10px rgba(0,0,0,0.06)",
+										transition: "transform 0.3s ease, box-shadow 0.3s ease"
+									}}
+									onMouseEnter={(e) => {
+										e.currentTarget.style.transform = "translateY(-5px)";
+										e.currentTarget.style.boxShadow = "0 8px 20px rgba(0,0,0,0.12)";
+									}}
+									onMouseLeave={(e) => {
+										e.currentTarget.style.transform = "translateY(0)";
+										e.currentTarget.style.boxShadow = "0 3px 10px rgba(0,0,0,0.06)";
+									}}
+								>
+									{/* Blog Image */}
+									<div style={{ height: "240px", width: "100%", overflow: "hidden", backgroundColor: "#f8f9fa", position: "relative" }}>
+										<img
+											src={a.image?.startsWith("http") ? a.image : `https://organive-store.onrender.com/uploads/${a.image}`}
+											alt={a.blogtitle || "Blog"}
+											onError={(e) => { e.target.onerror = null; e.target.src = a.image?.startsWith("http") ? a.image : `/uploads/${a.image}` }}
+											style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.4s ease" }}
+										/>
+									</div>
 
-								<div className="p-t-18">
-									<span className="txt-s-107 cl3">
-										Dec 20, 2024
-									</span>
+									{/* Blog Content */}
+									<div style={{ padding: "20px 20px 24px", display: "flex", flexDirection: "column", flexGrow: 1 }}>
+										{a.time && (
+											<span style={{ fontSize: "13px", color: "#888", display: "block", marginBottom: "8px" }}>
+												<i className="fa fa-calendar m-r-6"></i>
+												{a.time}
+											</span>
+										)}
 
-									<h4 className="p-t-5 p-b-14">
-										<a href="#" className="txt-m-109 cl3 hov-cl10 trans-04">
-											Fresh Organic Farming Practices
-										</a>
-									</h4>
+										<h4 style={{ marginBottom: "12px", minHeight: "48px" }}>
+											<Link
+												to={`/blogdetails?id=${a._id}`}
+												className="txt-m-109 cl3 hov-cl10 trans-04"
+												style={{
+													fontSize: "18px",
+													fontWeight: "600",
+													lineHeight: "1.4",
+													display: "-webkit-box",
+													WebkitLineClamp: 2,
+													WebkitBoxOrient: "vertical",
+													overflow: "hidden"
+												}}
+												title={a.blogtitle}
+											>
+												{a.blogtitle}
+											</Link>
+										</h4>
 
-									<p className="txt-s-101 cl6 p-b-12">
-										Explore the benefits and sustainable techniques behind modern organic agriculture.
-									</p>
+										{/* Detail excerpt if present */}
+										{a.detail && (
+											<p
+												style={{
+													fontSize: "14px",
+													color: "#666",
+													lineHeight: "1.6",
+													marginBottom: "16px",
+													minHeight: "44px",
+													display: "-webkit-box",
+													WebkitLineClamp: 2,
+													WebkitBoxOrient: "vertical",
+													overflow: "hidden"
+												}}
+											>
+												{a.detail}
+											</p>
+										)}
 
-									<div className="flex-w flex-m">
-										<div className="p-r-19">
-											<span className="txt-s-111 cl9">Post by </span>
-											<span className="txt-s-119 cl6">Admin</span>
+										{/* Read More Link */}
+										<div style={{ marginTop: "auto", paddingTop: "12px" }}>
+											<Link
+												to={`/blogdetails?id=${a._id}`}
+												className="hov-cl10 trans-04"
+												style={{
+													color: "#71a330",
+													fontWeight: "600",
+													fontSize: "14px",
+													display: "inline-flex",
+													alignItems: "center",
+													gap: "6px"
+												}}
+											>
+												Read More <i className="fa fa-long-arrow-right"></i>
+											</Link>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-
-						<div className="col-sm-6 col-md-4 p-b-30">
-							<div>
-								<div className="wrap-pic-w hov4">
-									<img src="/images/blog-12.jpg" alt="BLOG" />
-								</div>
-
-								<div className="p-t-18">
-									<span className="txt-s-107 cl3">
-										Nov 15, 2024
-									</span>
-
-									<h4 className="p-t-5 p-b-14">
-										<a href="#" className="txt-m-109 cl3 hov-cl10 trans-04">
-											Healthy Eating for a Better Lifestyle
-										</a>
-									</h4>
-
-									<p className="txt-s-101 cl6 p-b-12">
-										How incorporating wholesome greens into your daily diet can boost your energy levels.
-									</p>
-
-									<div className="flex-w flex-m">
-										<div className="p-r-19">
-											<span className="txt-s-111 cl9">Post by </span>
-											<span className="txt-s-119 cl6">Admin</span>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div className="col-sm-6 col-md-4 p-b-30">
-							<div>
-								<div className="wrap-pic-w hov4">
-									<img src="/images/blog-13.jpg" alt="BLOG" />
-								</div>
-
-								<div className="p-t-18">
-									<span className="txt-s-107 cl3">
-										Oct 10, 2024
-									</span>
-
-									<h4 className="p-t-5 p-b-14">
-										<a href="#" className="txt-m-109 cl3 hov-cl10 trans-04">
-											10 Essential Superfoods for Immunity
-										</a>
-									</h4>
-
-									<p className="txt-s-101 cl6 p-b-12">
-										A quick guide to nutrient-dense superfoods that help keep your immune system strong.
-									</p>
-
-									<div className="flex-w flex-m">
-										<div className="p-r-19">
-											<span className="txt-s-111 cl9">Post by </span>
-											<span className="txt-s-119 cl6">Admin</span>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+						)}
 					</div>
 				</div>
+
+				
 			</section>
 
 			{/* Subscribe */}

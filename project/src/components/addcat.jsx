@@ -222,7 +222,7 @@ export const AddCat = () => {
 									{/*  Block1  */}
 									<div className="block1">
 										<div className="block1-bg wrap-pic-w bo-all-1 bocl12 hov3 trans-04">
-											<img src={`public/uploads/${data.catimg}`} alt="IMG" />
+											<img src={data.catimg?.startsWith("http") ? data.catimg : `https://organive-store.onrender.com/uploads/${data.catimg}`} alt="IMG" onError={(e) => { e.target.onerror = null; e.target.src = data.catimg?.startsWith("http") ? data.catimg : `/uploads/${data.catimg}` }} />
 
 											<div className="block1-content flex-col-c-m p-b-46">
 												<a href="product-single.html" className="txt-m-103 cl3 txt-center hov-cl10 trans-04 js-name-b1">

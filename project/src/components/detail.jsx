@@ -127,8 +127,9 @@ export const Detail = () => {
 					<div className="col-sm-10 col-md-6 col-lg-5 m-rl-auto p-b-30">
 						<div className="wrap-pic-w bo-all-1 bocl12" style={{ borderRadius: "8px", overflow: "hidden" }}>
 							<img
-								src={`/uploads/${image}`}
+								src={image?.startsWith("http") ? image : `https://organive-store.onrender.com/uploads/${image}`}
 								alt="Product"
+								onError={(e) => { e.target.onerror = null; e.target.src = image?.startsWith("http") ? image : `/uploads/${image}` }}
 								style={{ width: "100%", height: "380px", objectFit: "cover", display: "block" }}
 							/>
 						</div>

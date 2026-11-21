@@ -150,8 +150,9 @@ export const AddToCart = () => {
 														style={{ width: "80px", height: "80px", borderRadius: "8px", overflow: "hidden" }}
 													>
 														<img
-															src={`/uploads/${data.image}`}
+															src={data.image?.startsWith("http") ? data.image : `https://organive-store.onrender.com/uploads/${data.image}`}
 															alt={name}
+															onError={(e) => { e.target.onerror = null; e.target.src = data.image?.startsWith("http") ? data.image : `/uploads/${data.image}` }}
 															style={{ width: "100%", height: "100%", objectFit: "cover" }}
 														/>
 													</div>

@@ -60,8 +60,9 @@ export const Allpro = () => {
 									<div className="block1">
 										<div className="block1-bg wrap-pic-w bo-all-1 bocl12 hov3 trans-04" style={{ borderRadius: "8px", overflow: "hidden" }}>
 											<img
-												src={`/uploads/${data.image}`}
+												src={data.image?.startsWith("http") ? data.image : `https://organive-store.onrender.com/uploads/${data.image}`}
 												alt={data.name}
+												onError={(e) => { e.target.onerror = null; e.target.src = data.image?.startsWith("http") ? data.image : `/uploads/${data.image}` }}
 												style={{ width: "100%", height: "260px", objectFit: "cover", display: "block" }}
 											/>
 										</div>

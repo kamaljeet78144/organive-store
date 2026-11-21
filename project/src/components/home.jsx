@@ -403,7 +403,7 @@ export const Home = () => {
 				<div className="container">
 					<div className="size-a-1 flex-col-c-m p-b-70">
 						<div className="txt-center txt-m-201 cl10 how-pos1-parent m-b-14">
-							Fresh Vegetables
+							Fresh products
 
 							<div className="how-pos1">
 								<img src="/images/icons/symbol-02.png" alt="IMG" />
@@ -625,12 +625,12 @@ export const Home = () => {
 												<i className="fa fa-leaf"></i> 100% Organic
 											</span>
 											<img
-												src={`/uploads/${data.catimg}`}
+												src={data.catimg?.startsWith("http") ? data.catimg : `https://organive-store.onrender.com/uploads/${data.catimg}`}
 												alt={data.catname}
 												className="category-card-img"
 												onError={(e) => {
 													e.target.onerror = null;
-													e.target.src = "/images/other-02.png";
+													e.target.src = data.catimg?.startsWith("http") ? data.catimg : `/uploads/${data.catimg}`;
 												}}
 											/>
 											<div className="category-card-img-overlay"></div>
@@ -748,7 +748,7 @@ export const Home = () => {
 										{fruits.map((a, index) =>
 											<Link to={`/detail?id=${a._id}`} className="flex-w flex-str size-h-1 bo-all-1 bocl12 hov3 trans-04 m-b-30" key={index}>
 												<div className="size-w-6 flex-c-m wrap-pic-max-s">
-													<img src={`/uploads/${a.image}`} alt="IMG-PRODUCT" style={{ height: "150px", width: "150px" }} />
+													<img src={a.image?.startsWith("http") ? a.image : `https://organive-store.onrender.com/uploads/${a.image}`} alt="IMG-PRODUCT" style={{ height: "150px", width: "150px" }} onError={(e) => { e.target.onerror = null; e.target.src = a.image?.startsWith("http") ? a.image : `/uploads/${a.image}` }} />
 												</div>
 
 												<div className="size-w-7 flex-col-m p-l-30 p-tb-15 p-r-15 p-l-0-ssm">
@@ -802,7 +802,7 @@ export const Home = () => {
 											{vegs.map((a, index) =>
 												<Link to={`/detail?id=${a._id}`} className="flex-w flex-str size-h-1 bo-all-1 bocl12 hov3 trans-04 m-b-30" key={index}>
 													<div className="size-w-6 flex-c-m wrap-pic-max-s">
-														<img src={`/uploads/${a.image}`} alt="IMG-PRODUCT" style={{ height: "150px", width: "150px" }} />
+														<img src={a.image?.startsWith("http") ? a.image : `https://organive-store.onrender.com/uploads/${a.image}`} alt="IMG-PRODUCT" style={{ height: "150px", width: "150px" }} onError={(e) => { e.target.onerror = null; e.target.src = a.image?.startsWith("http") ? a.image : `/uploads/${a.image}` }} />
 													</div>
 
 													<div className="size-w-7 flex-col-m p-l-30 p-tb-15 p-r-15 p-l-0-ssm">

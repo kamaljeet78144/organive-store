@@ -345,8 +345,9 @@ export const Checkout = () => {
 												}}
 											>
 												<img
-													src={`/uploads/${product.image}`}
+													src={product.image?.startsWith("http") ? product.image : `https://organive-store.onrender.com/uploads/${product.image}`}
 													alt={product.name}
+													onError={(e) => { e.target.onerror = null; e.target.src = product.image?.startsWith("http") ? product.image : `/uploads/${product.image}` }}
 													style={{ width: "100%", height: "100%", objectFit: "cover" }}
 												/>
 											</div>

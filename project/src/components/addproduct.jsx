@@ -197,13 +197,27 @@ const product=async()=>{
 
 							<form id="add-product-form" className="validate-form">
 								<div className="row">
-									{/* Product Name Section */}
-									<div className="col-lg-6 p-b-20">
-										<div className="m-b-8 txt-s-101 cl3">
+									{/* Category Name Section */}
+									<div className="col-lg-6 col-md-6 col-12 p-b-20">
+										<div className="m-b-8 txt-s-101 cl3" style={{ fontWeight: "600" }}>
 											Category Name:
 										</div>
-										<div className="m-r--5 m-rl-0-lg">
-											<select className="txt-s-115 cl3 plh1 size-a-25 bo-all-1 bocl15 focus1 p-rl-20" name="catname" value={catname} onChange={(e) => setcatname(e.target.value)}>
+										<div>
+											<select
+												className="txt-s-115 cl3 plh1 focus1"
+												style={{
+													width: "100%",
+													height: "48px",
+													padding: "0 18px",
+													border: "1px solid #d9d9d9",
+													borderRadius: "6px",
+													backgroundColor: "#fff",
+													outline: "none"
+												}}
+												name="catname"
+												value={catname}
+												onChange={(e) => setcatname(e.target.value)}
+											>
 												<option value="">Select Category</option>
 												{
 													allcat && allcat.map((cat, index) =>
@@ -213,51 +227,140 @@ const product=async()=>{
 											</select>
 										</div>
 									</div>
-									<div className="col-lg-6 p-b-20">
-										<div className="m-b-8 txt-s-101 cl3">
+
+									{/* Product Name Section */}
+									<div className="col-lg-6 col-md-6 col-12 p-b-20">
+										<div className="m-b-8 txt-s-101 cl3" style={{ fontWeight: "600" }}>
 											Product Name:
 										</div>
-										<div className="m-r--5 m-rl-0-lg">
-											<input className="txt-s-115 cl3 plh1 size-a-25 bo-all-1 bocl15 focus1 p-rl-20" type="text" name="name" placeholder="Product Name *" value={name} onChange={(e) => setname(e.target.value)} />
+										<div>
+											<input
+												className="txt-s-115 cl3 plh1 focus1"
+												style={{
+													width: "100%",
+													height: "48px",
+													padding: "0 18px",
+													border: "1px solid #d9d9d9",
+													borderRadius: "6px",
+													outline: "none"
+												}}
+												type="text"
+												name="name"
+												placeholder="Product Name *"
+												value={name}
+												onChange={(e) => setname(e.target.value)}
+											/>
 										</div>
 									</div>
 
 									{/* Product Price Section */}
-									<div className="col-lg-6 p-b-20">
-										<div className="m-b-8 txt-s-101 cl3">
+									<div className="col-lg-6 col-md-6 col-12 p-b-20">
+										<div className="m-b-8 txt-s-101 cl3" style={{ fontWeight: "600" }}>
 											Product Price:
 										</div>
-										<div className="m-l--5 m-rl-0-lg">
-											<input className="txt-s-115 cl3 plh1 size-a-25 bo-all-1 bocl15 focus1 p-rl-20" type="text" name="price" placeholder="Product Price *" value={price} onChange={(e) => setprice(e.target.value)} />
+										<div>
+											<input
+												className="txt-s-115 cl3 plh1 focus1"
+												style={{
+													width: "100%",
+													height: "48px",
+													padding: "0 18px",
+													border: "1px solid #d9d9d9",
+													borderRadius: "6px",
+													outline: "none"
+												}}
+												type="text"
+												name="price"
+												placeholder="Product Price *"
+												value={price}
+												onChange={(e) => setprice(e.target.value)}
+											/>
 										</div>
 									</div>
 
 									{/* Product Image Section */}
-									<div className="col-12 p-b-20">
-										<div className="m-b-8 txt-s-101 cl3">
+									<div className="col-lg-6 col-md-6 col-12 p-b-20">
+										<div className="m-b-8 txt-s-101 cl3" style={{ fontWeight: "600" }}>
 											Product Image:
 										</div>
 										<div>
-											<input className="txt-s-115 cl3 plh1 size-a-25 bo-all-1 bocl15 focus1 p-rl-20" type="file" name="image" onChange={(e) => setimage(e.target.files[0])} />
+											<input
+												className="txt-s-115 cl3 plh1 focus1"
+												style={{
+													width: "100%",
+													height: "48px",
+													padding: "10px 18px",
+													border: "1px solid #d9d9d9",
+													borderRadius: "6px",
+													outline: "none",
+													backgroundColor: "#fff",
+													display: "flex",
+													alignItems: "center"
+												}}
+												type="file"
+												name="image"
+												onChange={(e) => setimage(e.target.files[0])}
+											/>
 										</div>
 									</div>
 
 									{/* Product Detail Section */}
 									<div className="col-12 p-b-20">
-										<div className="m-b-8 txt-s-101 cl3">
+										<div className="m-b-8 txt-s-101 cl3" style={{ fontWeight: "600" }}>
 											Product Detail:
 										</div>
 										<div>
-											<textarea className="txt-s-115 cl3 plh1 size-a-48 bo-all-1 bocl15 focus1 p-rl-20 p-tb-10" name="detail" placeholder="Product Detail *" value={detail} onChange={(e) => setdetail(e.target.value)}></textarea>
+											<textarea
+												className="txt-s-115 cl3 plh1 focus1"
+												style={{
+													width: "100%",
+													minHeight: "120px",
+													padding: "14px 18px",
+													border: "1px solid #d9d9d9",
+													borderRadius: "6px",
+													outline: "none",
+													resize: "vertical"
+												}}
+												name="detail"
+												placeholder="Product Detail *"
+												value={detail}
+												onChange={(e) => setdetail(e.target.value)}
+											></textarea>
 										</div>
 									</div>
 								</div>
 
-								<div className="flex-l p-t-10">
-									<button type="button" className="flex-c-m txt-s-103 cl0 bg10 size-a-2 hov-btn2 trans-04" onClick={addproduct}>
+								<div className="flex-l p-t-10" style={{ gap: "12px" }}>
+									<button
+										type="button"
+										className="flex-c-m txt-s-103 cl0 bg10 trans-04"
+										style={{
+											height: "48px",
+											padding: "0 30px",
+											borderRadius: "6px",
+											cursor: "pointer",
+											fontWeight: "600",
+											border: "none",
+											transition: "all 0.3s ease"
+										}}
+										onClick={addproduct}
+									>
 										Add Product
 									</button>
-									<button type="button" className="flex-c-m txt-s-103 cl0 bg10 size-a-2 hov-btn2 trans-04 m-l-10" onClick={product}>
+									<button
+										type="button"
+										className="flex-c-m txt-s-103 cl0 bg10 trans-04"
+										style={{
+											height: "48px",
+											padding: "0 30px",
+											borderRadius: "6px",
+											cursor: "pointer",
+											fontWeight: "600",
+											border: "none",
+											transition: "all 0.3s ease"
+										}}
+										onClick={product}
+									>
 										Update
 									</button>
 								</div>
@@ -284,39 +387,149 @@ const product=async()=>{
 						</h3>
 					</div>
 
-					<div className="row isotope-grid">
+					<div className="row" style={{ display: "flex", flexWrap: "wrap" }}>
 						{
-							allproduct.map((data, index) => (
-								<div className="col-sm-6 col-md-4 col-lg-3 p-b-75" key={index}>
-									{/* Block1 */}
-									<div className="block1">
-										<div className="block1-bg wrap-pic-w bo-all-1 bocl12 hov3 trans-04">
-											<img src={`/uploads/${data.image}`} alt="IMG" />
-
-											<div className="block1-content flex-col-c-m p-b-46">
-												<a href="#" className="txt-m-103 cl3 txt-center hov-cl10 trans-04 js-name-b1">
-													{data.name}
-												</a>
-
-												<span className="block1-content-more txt-m-104 cl9 p-t-21 trans-04">
-													{data.price}$
-												</span>
-
-												{data.detail && (
-													<p className="txt-s-101 cl6 txt-center p-t-10 p-rl-15">
-														{data.detail}
-													</p>
-												)}
-											</div>
+							allproduct && allproduct.map((data, index) => (
+								<div className="col-sm-6 col-md-4 col-lg-3 p-b-40 d-flex" key={data._id || index}>
+									<div
+										className="trans-04"
+										style={{
+											width: "100%",
+											display: "flex",
+											flexDirection: "column",
+											backgroundColor: "#fff",
+											borderRadius: "10px",
+											border: "1px solid #e6e6e6",
+											overflow: "hidden",
+											boxShadow: "0 3px 10px rgba(0,0,0,0.06)",
+											transition: "transform 0.3s ease, box-shadow 0.3s ease"
+										}}
+										onMouseEnter={(e) => {
+											e.currentTarget.style.transform = "translateY(-5px)";
+											e.currentTarget.style.boxShadow = "0 8px 20px rgba(0,0,0,0.12)";
+										}}
+										onMouseLeave={(e) => {
+											e.currentTarget.style.transform = "translateY(0)";
+											e.currentTarget.style.boxShadow = "0 3px 10px rgba(0,0,0,0.06)";
+										}}
+									>
+										{/* Product Image */}
+										<div style={{ width: "100%", height: "240px", overflow: "hidden", backgroundColor: "#f8f9fa", position: "relative" }}>
+											<img
+												src={data.image?.startsWith("http") ? data.image : `https://organive-store.onrender.com/uploads/${data.image}`}
+												alt={data.name || "Product"}
+												onError={(e) => { e.target.onerror = null; e.target.src = data.image?.startsWith("http") ? data.image : `/uploads/${data.image}` }}
+												style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.4s ease" }}
+											/>
 										</div>
-									</div>
-									<div className="flex-c-m p-t-15" style={{ gap: "10px" }}>
-										<button style={{ backgroundColor: "#dc3545", color: "#fff", padding: "8px 20px", border: "none", borderRadius: "4px", cursor: "pointer", fontWeight: "600" }} onClick={() => del(data._id)}>
-											Delete
-										</button>
-										<button style={{ backgroundColor: "#28a745", color: "#fff", padding: "8px 20px", border: "none", borderRadius: "4px", cursor: "pointer", fontWeight: "600" }} onClick={()=>onupdate(data)}>
-											Update
-										</button>
+
+										{/* Product Info */}
+										<div style={{ padding: "18px 16px 12px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", flexGrow: 1 }}>
+											<h4
+												className="txt-m-103 cl3 hov-cl10 trans-04"
+												style={{
+													textTransform: "capitalize",
+													fontSize: "17px",
+													fontWeight: "600",
+													marginBottom: "8px",
+													lineHeight: "1.3",
+													display: "-webkit-box",
+													WebkitLineClamp: 1,
+													WebkitBoxOrient: "vertical",
+													overflow: "hidden",
+													width: "100%"
+												}}
+												title={data.name}
+											>
+												{data.name}
+											</h4>
+
+											<span
+												style={{
+													fontSize: "18px",
+													fontWeight: "700",
+													color: "#71a330",
+													marginBottom: "8px",
+													display: "block"
+												}}
+											>
+												{data.price?.toString().includes("$") ? data.price : `${data.price}$`}
+											</span>
+
+											<p
+												className="txt-s-101 cl6"
+												style={{
+													fontSize: "13px",
+													lineHeight: "1.5",
+													margin: "0",
+													minHeight: "38px",
+													display: "-webkit-box",
+													WebkitLineClamp: 2,
+													WebkitBoxOrient: "vertical",
+													overflow: "hidden",
+													width: "100%",
+													color: "#777"
+												}}
+												title={data.detail || ""}
+											>
+												{data.detail || ""}
+											</p>
+										</div>
+
+										{/* Action Buttons */}
+										<div
+											style={{
+												marginTop: "auto",
+												padding: "12px 16px 16px",
+												borderTop: "1px solid #f0f0f0",
+												display: "flex",
+												gap: "10px",
+												width: "100%"
+											}}
+										>
+											<button
+												type="button"
+												style={{
+													flex: 1,
+													backgroundColor: "#dc3545",
+													color: "#fff",
+													padding: "9px 0",
+													border: "none",
+													borderRadius: "6px",
+													cursor: "pointer",
+													fontWeight: "600",
+													fontSize: "13px",
+													transition: "background-color 0.2s ease",
+													textAlign: "center"
+												}}
+												onMouseOver={(e) => e.target.style.backgroundColor = "#bd2130"}
+												onMouseOut={(e) => e.target.style.backgroundColor = "#dc3545"}
+												onClick={() => del(data._id)}
+											>
+												Delete
+											</button>
+											<button
+												type="button"
+												style={{
+													flex: 1,
+													backgroundColor: "#28a745",
+													color: "#fff",
+													padding: "9px 0",
+													border: "none",
+													borderRadius: "6px",
+													cursor: "pointer",
+													fontWeight: "600",
+													fontSize: "13px",
+													transition: "background-color 0.2s ease",
+													textAlign: "center"
+												}}
+												onMouseOver={(e) => e.target.style.backgroundColor = "#218838"}
+												onMouseOut={(e) => e.target.style.backgroundColor = "#28a745"}
+												onClick={() => onupdate(data)}
+											>
+												Update
+											</button>
+										</div>
 									</div>
 								</div>
 							))

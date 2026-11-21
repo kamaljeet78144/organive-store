@@ -75,8 +75,9 @@ export const Allblogs = () => {
 									{/* Blog Image */}
 									<div className="wrap-pic-w hov4" style={{ height: "240px", overflow: "hidden" }}>
 										<img
-											src={`/uploads/${a.image}`}
+											src={a.image?.startsWith("http") ? a.image : `https://organive-store.onrender.com/uploads/${a.image}`}
 											alt="Blog"
+											onError={(e) => { e.target.onerror = null; e.target.src = a.image?.startsWith("http") ? a.image : `/uploads/${a.image}` }}
 											style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
 										/>
 									</div>
